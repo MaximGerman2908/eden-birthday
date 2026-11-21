@@ -14,6 +14,7 @@ import {
 import { birthdayConfig } from '../data/birthdayConfig';
 import { downloadIcsFile, getGoogleCalendarUrl } from '../utils/calendar';
 import { fireCelebratoryConfetti } from '../utils/confetti';
+import { sound } from '../utils/soundEffects';
 
 const DODGE_BUTTON_LABELS = [
   "אממ... לא מתאים לי 🙄",
@@ -67,6 +68,7 @@ export function GoldenTicket() {
     }
 
     // Substantial leaps in random directions
+    sound.playBoing();
     const randomAngle = Math.random() * Math.PI * 2;
     const distance = 130 + Math.random() * 80;
     const jumpX = Math.cos(randomAngle) * distance;
@@ -78,6 +80,7 @@ export function GoldenTicket() {
   };
 
   const handleConfirmRSVP = () => {
+    sound.playFanfare();
     setIsConfirmed(true);
     fireCelebratoryConfetti();
   };

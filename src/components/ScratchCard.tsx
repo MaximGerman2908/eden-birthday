@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { RefreshCw, Check, Sparkles } from 'lucide-react';
 import { birthdayConfig } from '../data/birthdayConfig';
 import { fireCelebratoryConfetti } from '../utils/confetti';
+import { sound } from '../utils/soundEffects';
 
 export function ScratchCard() {
   const { scratchCard } = birthdayConfig;
@@ -114,6 +115,7 @@ export function ScratchCard() {
 
     if (ratio >= 40) {
       setIsScratched(true);
+      sound.playFanfare();
       fireCelebratoryConfetti();
     }
   };

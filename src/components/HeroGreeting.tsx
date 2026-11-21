@@ -1,16 +1,54 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Heart } from 'lucide-react';
+import { ChevronDown, Heart, Sparkles } from 'lucide-react';
 import { birthdayConfig } from '../data/birthdayConfig';
+import { CapybaraMascot } from './mascots/CapybaraMascot';
+import { SheepMascot } from './mascots/SheepMascot';
+import { CamelMascot } from './mascots/CamelMascot';
+import { sound } from '../utils/soundEffects';
 
 interface HeroGreetingProps {
   onExploreClick: () => void;
+  onTriggerDisco?: () => void;
 }
 
-export function HeroGreeting({ onExploreClick }: HeroGreetingProps) {
+export function HeroGreeting({ onExploreClick, onTriggerDisco }: HeroGreetingProps) {
   const { hero } = birthdayConfig;
+  const [capyClicks, setCapyClicks] = useState(0);
+  const [capyMood, setCapyMood] = useState<'happy' | 'chewing' | 'party' | 'hearts'>('happy');
+  const [sheepMood, setSheepMood] = useState<'happy' | 'singing' | 'hearts'>('happy');
+  const [camelMood, setCamelMood] = useState<'happy' | 'sunglasses' | 'hearts'>('sunglasses');
+
+  const handleCapyClick = () => {
+    sound.playPop();
+    const nextCount = capyClicks + 1;
+    setCapyClicks(nextCount);
+
+    if (nextCount >= 3) {
+      sound.playFanfare();
+      setCapyMood('party');
+      if (onTriggerDisco) onTriggerDisco();
+      setCapyClicks(0);
+    } else {
+      setCapyMood('chewing');
+      setTimeout(() => setCapyMood('happy'), 1500);
+    }
+  };
+
+  const handleSheepClick = () => {
+    sound.playSparkle();
+    setSheepMood('hearts');
+    setTimeout(() => setSheepMood('happy'), 1500);
+  };
+
+  const handleCamelClick = () => {
+    sound.playBoing();
+    setCamelMood('hearts');
+    setTimeout(() => setCamelMood('sunglasses'), 1500);
+  };
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-12 pb-12 select-none">
+    <section className="relative min-h-[92vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-10 pb-12 select-none">
       {/* Top cute tag badge */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -18,49 +56,54 @@ export function HeroGreeting({ onExploreClick }: HeroGreetingProps) {
         transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
         className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-peach-100 border border-peach-300 text-peach-600 font-varela text-xs sm:text-sm font-bold mb-6 shadow-sm"
       >
+        <Sparkles className="w-3.5 h-3.5 text-peach-500 animate-spin" style={{ animationDuration: '6s' }} />
         <span>{hero.badge}</span>
       </motion.div>
 
-      {/* Cute Animal Trio Bouncing together */}
+      {/* Bespoke Illustrated Animal Trio with Interactive Easter Egg */}
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.1 }}
-        className="flex items-center justify-center gap-4 sm:gap-6 mb-6 text-4xl sm:text-6xl"
+        className="flex items-end justify-center gap-2 sm:gap-6 mb-8"
       >
-        {/* Sheep */}
+        {/* Fluffy Sheep */}
         <motion.div
-          animate={{ y: [0, -10, 0], rotate: [-4, 4, -4] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          className="filter drop-shadow-sm cursor-pointer hover:scale-125 transition-transform"
-          title="כבשה מתוקה"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+          className="cursor-pointer"
+          title="לחצי עליי לחיבוק צמרירי!"
         >
-          🐑
+          <SheepMascot size={100} mood={sheepMood} onClick={handleSheepClick} />
         </motion.div>
 
-        {/* Capybara with orange */}
+        {/* Illustrated Capybara with Orange & 3-click easter egg */}
         <motion.div
-          animate={{ y: [0, -14, 0] }}
-          transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
-          className="relative filter drop-shadow-sm cursor-pointer hover:scale-125 transition-transform"
-          title="קפיברה רגועה עם תפוז"
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
+          className="relative cursor-pointer"
+          title="לחצי 3 פעמים ברצף להפתעה סודית!"
         >
-          <span className="text-5xl sm:text-7xl">🦫</span>
-          <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xl sm:text-2xl">🍊</span>
+          <CapybaraMascot size={135} mood={capyMood} onClick={handleCapyClick} />
+          {capyClicks > 0 && capyClicks < 3 && (
+            <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-varela font-bold px-2 py-0.5 rounded-full bg-peach-500 text-white shadow-sm whitespace-nowrap">
+              עוד {3 - capyClicks} לחיצות! ✨
+            </span>
+          )}
         </motion.div>
 
-        {/* Camel */}
+        {/* Festive Camel with Sunglasses */}
         <motion.div
-          animate={{ y: [0, -10, 0], rotate: [4, -4, 4] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-          className="filter drop-shadow-sm cursor-pointer hover:scale-125 transition-transform"
-          title="גמל חגיגי"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+          className="cursor-pointer"
+          title="הגמל מוסר נשיקות!"
         >
-          🐪
+          <CamelMascot size={100} mood={camelMood} onClick={handleCamelClick} />
         </motion.div>
       </motion.div>
 
-      {/* Main Bouncy Headline (Clean styling, NO spellcheck wavy underline) */}
+      {/* Main Bouncy Headline */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -88,7 +131,7 @@ export function HeroGreeting({ onExploreClick }: HeroGreetingProps) {
         {hero.subtitle}
       </motion.p>
 
-      {/* Primary Action Button - Rich vibrant coral background with crisp white text and high contrast */}
+      {/* Primary Action Button */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -96,7 +139,10 @@ export function HeroGreeting({ onExploreClick }: HeroGreetingProps) {
         className="flex flex-col items-center gap-4"
       >
         <button
-          onClick={onExploreClick}
+          onClick={() => {
+            sound.playSparkle();
+            onExploreClick();
+          }}
           className="group relative inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full bg-[#E25530] hover:bg-[#CA4421] text-white font-varela font-bold text-base sm:text-lg shadow-pill-pop hover:shadow-fluffy hover:scale-105 active:scale-95 transition-all duration-300 border border-[#D54521]"
         >
           <Heart className="w-5 h-5 fill-white text-white group-hover:scale-125 transition-transform" />
