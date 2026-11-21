@@ -1,6 +1,6 @@
 /**
- * קובץ ההגדרות הראשי של יום ההולדת לדנדן
- * כאן נמצאים כל הטקסטים, התאריכים, החיות החמודות וההפתעות.
+ * Main birthday configuration for Dandan.
+ * Single source of truth for all Hebrew copy, event dates, clues, and mystery milestones.
  */
 
 export interface ItineraryItem {
@@ -12,7 +12,7 @@ export interface ItineraryItem {
   animal: 'sheep' | 'capybara' | 'camel' | 'cake';
   badge: string;
   locationName?: string;
-  unlockDate?: string;
+  unlockDate?: string; // Target ISO date string for live countdown
   mysteryHint?: string;
 }
 
@@ -140,7 +140,7 @@ export const birthdayConfig: BirthdayConfig = {
     foilLabel: "גרדי אותי כדי לגלות! 🦫✨",
     revealTitle: "קפיברה שף חושפת את התפריט:",
     revealFood: "ארוחת שף אינטימית עם מנות מושחתות וקינוחים מטורפים 🍝🍰",
-    revealDetails: "כולל יין מעולה, אווירה כיפית והפתעה מתוקה בסוף שנאפתה במיוחד בשבילך!",
+    revealDetails: "כולל ייין מעולה, אווירה כיפית והפתעה מתוקה בסוף שנאפתה במיוחד בשבילך!",
   },
   itinerary: {
     tag: "הלו״ז החגיגי ⏰",

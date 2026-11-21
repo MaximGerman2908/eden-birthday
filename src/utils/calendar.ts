@@ -1,5 +1,6 @@
 /**
- * יצירת קבצי יומן .ics וקישורי Google Calendar בעברית
+ * Calendar invitation helpers for Golden Ticket RSVP.
+ * Generates RFC 5545 compliant .ics files client-side and Google Calendar web URLs with UTF-8 Hebrew support.
  */
 
 interface CalendarEventArgs {
@@ -16,7 +17,7 @@ function formatToIcsDate(isoString: string): string {
 }
 
 /**
- * יצירה והורדה של קובץ .ics שתומך ב-Apple Calendar וב-Outlook עם תמיכה ב-UTF-8
+ * Creates and triggers browser download of an .ics calendar file with UTF-8 encoding.
  */
 export function downloadIcsFile({ title, description, location, startIso, endIso }: CalendarEventArgs) {
   const dtStart = formatToIcsDate(startIso);
@@ -43,7 +44,7 @@ export function downloadIcsFile({ title, description, location, startIso, endIso
     'BEGIN:VALARM',
     'TRIGGER:-PT3H',
     'ACTION:DISPLAY',
-    'DESCRIPTION:תזכורת: יום הולדת לעדנוש מתחיל בקרוב!',
+    'DESCRIPTION:תזכורת: יום הולדת לדנדן מתחיל בקרוב!',
     'END:VALARM',
     'END:VEVENT',
     'END:VCALENDAR'
@@ -53,7 +54,7 @@ export function downloadIcsFile({ title, description, location, startIso, endIso
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute('download', "Eden-Birthday-Party.ics");
+  link.setAttribute('download', "Dandan-Birthday-Party.ics");
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -61,7 +62,7 @@ export function downloadIcsFile({ title, description, location, startIso, endIso
 }
 
 /**
- * יצירת לינק ישיר להוספה ל-Google Calendar
+ * Generates a direct Google Calendar "Add Event" URL.
  */
 export function getGoogleCalendarUrl({ title, description, location, startIso, endIso }: CalendarEventArgs): string {
   const dtStart = formatToIcsDate(startIso);

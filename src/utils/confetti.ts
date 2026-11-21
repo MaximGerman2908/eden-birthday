@@ -1,7 +1,7 @@
 import confetti from 'canvas-confetti';
 
 /**
- * פיצוץ קונפטי חמוד וצבעוני בגווני פסטל, לבבות וכוכבים
+ * Celebratory multi-tier confetti burst with cute pastel colors, hearts, and stars.
  */
 export function fireCelebratoryConfetti() {
   const count = 220;
@@ -18,7 +18,7 @@ export function fireCelebratoryConfetti() {
     });
   }
 
-  // צבעי פסטל חמודים: אפרסק, שמנת, מנטה, ורוד בייבי
+  // Soft cute pastels: peach, cream, matcha, soft sky
   fire(0.25, {
     spread: 35,
     startVelocity: 50,
