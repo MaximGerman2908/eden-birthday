@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    direction: rtl;
+    background-color: #FFFDF9;
+    color: #3A332E;
+    font-family: 'Varela Round', 'Rubik', sans-serif;
+  }
+
+  body {
+    background-color: #FFFDF9;
+    background-image: 
+      radial-gradient(circle at 10% 15%, rgba(255, 212, 197, 0.35) 0%, transparent 40%),
+      radial-gradient(circle at 90% 30%, rgba(204, 223, 205, 0.35) 0%, transparent 40%),
+      radial-gradient(circle at 50% 80%, rgba(255, 230, 209, 0.4) 0%, transparent 50%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Cute rounded scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #FFF9F2;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #FFD4C5;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FF9473;
+  }
+}
+
+@layer utilities {
+  /* Fluffy cloud card */
+  .fluffy-card {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 2px solid rgba(255, 233, 226, 0.9);
+    border-radius: 2rem;
+  }
+
+  .fluffy-card-hover {
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .fluffy-card-hover:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 20px 40px -10px rgba(248, 117, 80, 0.16);
+    border-color: rgba(255, 184, 161, 0.8);
+  }
+
+  .text-cute-gradient {
+    background: linear-gradient(135deg, #F87550 0%, #FF9473 40%, #E87A5D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
